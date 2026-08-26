@@ -1,0 +1,6 @@
+{
+  "name": "subframe-mcp",
+  "command": "python",
+  "args": ["C:/Users/Deglu/.hermes/tools/subframe/mcp_server.py"],
+  "env": {}
+}
