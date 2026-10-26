@@ -1,0 +1,36 @@
+---
+title: Previewing your local app
+description: See your running app inside Subframe.
+---
+
+import DownloadDesktopCta from "/snippets/download-desktop-cta.mdx"
+
+<DownloadDesktopCta />
+
+Open your app in a browser tab to start [editing it live](/browser/making-live-edits) or [capturing it as a design](/browser/capturing-as-designs).
+
+<Steps>
+  <Step title="Connect your codebase">
+    Open a new browser tab, click **Connect codebase**, then select your local repository.
+
+    You can also [connect your codebase from Agent chat](/agent/connecting-your-codebase).
+
+  </Step>
+  <Step title="Start your dev server">
+    Click **Start server**. Your [agent](/agent/overview) starts the dev server and opens your app.
+  </Step>
+</Steps>
+
+If your server is already running, click its port under **Detected servers**.
+
+<Frame>
+  <img
+    src="/images/browser/detected-servers.png"
+    className="w-[700px]"
+    alt="A new tab with localhost:3000 listed under Detected servers, along with its page title, repository, and branch"
+  />
+</Frame>
+
+## Opening any URL
+
+Enter a URL such as `localhost:3000` in the address bar, then press <kbd>Enter</kbd>.

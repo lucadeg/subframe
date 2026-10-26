@@ -1,0 +1,92 @@
+---
+title: Overview
+description: Learn the Subframe editor interface and navigate between editing modes.
+---
+
+The Subframe editor is where you design pages, build components, and export production-ready code. Switch between three modes depending on your task, and open agent chat from any of them.
+
+## Editor modes
+
+<Frame>
+  <img
+    src="/images/editor/editor-modes.png" className="w-[304px]"
+    alt="The top of the Inspector panel with a collaborator avatar, the Share button, and the Design, Prototype, and Export tabs"
+  />
+</Frame>
+
+Use the mode tabs at the top of the Inspector panel to switch between the following modes:
+
+<CardGroup cols={2}>
+  <Card title="Design Mode" icon="square-mouse-pointer">
+    Edit visually with drag-and-drop, responsive canvas, and layers & properties.
+  </Card>
+  <Card title="Prototype Mode" icon="mouse-pointer-click">
+    Build AI-generated prototypes from your designs using annotations and prototype chat.
+  </Card>
+  <Card title="Export Mode" icon="download">
+    View code, set up the MCP server, export images, and send designs to coding agents like Claude Code, Cursor, and Codex.
+  </Card>
+</CardGroup>
+
+[Agent chat](/design/ask-ai/prompt-to-design) is available in every mode. Click the **Agent** button in the toolbar or press <kbd>Cmd</kbd> + <kbd>/</kbd> to open the docked panel and generate pages, components, and theme changes from a prompt.
+
+## Editor layout
+
+The editor consists of three main areas: left panel, canvas (center), and Inspector (right panel).
+
+<Frame>
+  <img src="/images/editor/editor-layout.png" alt="Editor layout showing the left panel, canvas, and inspector" />
+</Frame>
+
+### Left panel
+
+You have the following panels available to you:
+
+**Pages** — Switch between pages and canvases in your project. Navigate to different designs or subcomponents when editing components.
+
+**Layers** — View and organize the element hierarchy for the current page. Select, reorder, or group elements. Shows the complete component tree.
+
+### Canvas (center)
+
+Your design surface where elements appear at their actual rendered size. The canvas shows exactly how your design will look at the current breakpoint.
+
+Unlike infinite canvas tools, Subframe uses flexbox for layout (not absolute positioning). Elements flow and arrange using Stacks, resize responsively, and adapt to different screen sizes automatically. If you're familiar with Figma, this works similarly to auto-layout.
+
+A toolbar at the bottom of the canvas gives you quick access to actions: the **Select** tool for returning to selection (or press <kbd>V</kbd>), the **Insert** <Icon icon="plus" size={16} /> panel for browsing components and snippets, comments, and annotations.
+
+### Inspector (right panel)
+
+This is the context-aware properties panel that changes based on editor mode and selected element. The top of the Inspector holds the **Share** button, collaborator avatars, and the mode tabs.
+
+For example, in design mode, you'll see layout, sizing, colors, backgrounds, borders, shadows, padding, overflow, and component properties. In export mode, you'll see the code for the selected element and options to export it as an image.
+
+### Show and hide panels
+
+Press <kbd>Cmd</kbd> + <kbd>\\</kbd> to cycle through panel layouts: both panels visible, left panel collapsed, then both panels hidden. Press <kbd>Cmd</kbd> + <kbd>.</kbd> to show or hide all panels at once, including agent chat. On the web, click the panel icon <Icon icon="panel-right" size={16} /> next to the **Agent** button to show or hide the Inspector.
+
+## Responsive breakpoints
+
+Switch between breakpoints using the **Breakpoint** selector in the Inspector panel. Every project starts with **Desktop** and **Mobile**, and you can add custom breakpoints for any screen size.
+
+<Frame>
+  <img
+    src="/images/editor/editor-breakpoints.png" className="w-[323px]"
+    alt="Breakpoint selector in the Inspector panel listing Desktop and Mobile with their width ranges"
+  />
+</Frame>
+
+**Desktop (base)** — Applies at every width. Elements use their base flex properties.
+
+**Mobile and custom breakpoints** — Add overrides for properties that need different values below a given width.
+
+We recommend you design for desktop first, then add overrides only where needed. For details, see [Responsive design](/design/design-mode/responsive-design).
+
+## Collaboration
+
+Multiple team members can edit simultaneously. See who's viewing or editing with avatars at the top of the Inspector panel.
+
+<Frame>
+  <img src="/images/editor/editor-modes.png" className="w-[304px]" alt="The top of the Inspector panel with a collaborator avatar and the Share button" />
+</Frame>
+
+Click the **Share** button at the top of the Inspector panel to invite team members or create view-only links. Set roles (viewer/editor) and toggle public preview access.

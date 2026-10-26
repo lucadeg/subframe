@@ -1,0 +1,399 @@
+---
+title: MCP server
+description: Connect AI coding agents in Claude Code, Cursor, and Codex to Subframe with the MCP server and agent skills.
+---
+
+import McpSkillsInstall from "/snippets/mcp-skills-install.mdx"
+import CopyMcpLink from "/snippets/copy-mcp-link.mdx"
+
+The Subframe MCP server gives external coding agents direct access to your Subframe projects. The agent can read, design, and delete pages, components, and snippets, screenshot pages and components, export them as images, read prototypes, write design documents, edit the theme, and search the Subframe docs.
+
+<Note>Viewers get a read-only MCP server. Read, screenshot, export, and search tools work, but tools that design or edit require an editor seat.</Note>
+
+## Installing the MCP server and Agent skills
+
+<McpSkillsInstall />
+
+## Using Agent skills
+
+Agent skills are guided workflows that teach your agent how to use Subframe. The MCP server gives the agent access to Subframe, while the skills teach it what to do with that access.
+
+Subframe provides three skills:
+
+- **`/subframe:design`** designs and edits pages, components, snippets, design documents, and themes in Subframe
+- **`/subframe:develop`** sets up Subframe in your codebase, implements designs, and adds the required application logic
+- **`/subframe:import`** brings an existing codebase's or website's design system into Subframe, including tokens, fonts, icons, and components
+
+Agent skills use the [Agent Skills open standard ↗](https://agentskills.io).
+
+### Keeping Agent skills up to date
+
+For plugin updates and auto-update settings, follow the instructions in your client's tab [above](#installing-the-mcp-server-and-agent-skills). If you installed skills separately with `npx skills add`, check for updates with:
+
+```bash
+npx skills check
+```
+
+Install available updates with:
+
+```bash
+npx skills update
+```
+
+## Using the MCP server
+
+Once configured, your coding agent can access Subframe automatically when you prompt or paste an MCP link to a page from the **Export** tab.
+
+<CopyMcpLink />
+
+`design_page`, `design_component`, `edit_component`, and `design_snippet` generate with Subframe's AI and use your [Subframe AI credits](/admin/pricing-and-plans#subframe-ai-credits), even if your coding agent runs on its own subscription. They don't use credits when you run them from Agent chat with a [connected Claude Code or Codex subscription](/agent/connecting-an-agent).
+
+## Available tools
+
+The Subframe MCP server exposes tools across several categories. Most tools take a `projectId`. If omitted, the sole accessible project is used; if you can access several, the tool asks for a `projectId` instead.
+
+### Discovery
+
+| Tool                  | Description                                                         |
+| --------------------- | ------------------------------------------------------------------- |
+| `list_projects`       | List the projects you have access to                                |
+| `create_project`      | Create an empty project or one from the starter template            |
+| `delete_project`      | Delete a project for the whole team                                 |
+| `generate_auth_token` | Generate a CLI auth token for a team                                |
+| `get_project_info`    | Get project metadata and its design documents                       |
+| `search_docs`         | Search the Subframe documentation                                   |
+| `search_inspiration`  | Search a curated library of real landing pages for visual direction |
+
+An empty project has no theme or components, which suits importing designs. The starter template comes with a theme and components to build on. Free plans allow 1 project. A deleted project can't be restored.
+
+### Pages
+
+| Tool                 | Description                                                               |
+| -------------------- | ------------------------------------------------------------------------- |
+| `list_pages`         | List all pages and the canvases they belong to                            |
+| `get_page_info`      | Get a page's generated React and Tailwind code                            |
+| `design_page`        | Generate new page designs from a description                              |
+| `edit_page`          | Edit a page element's content, structure, and styles                      |
+| `update_node_styles` | Replace elements' Tailwind classes while preserving content and structure |
+| `screenshot_page`    | Screenshot a page, a single element, or a breakpoint                      |
+| `delete_page`        | Delete a page                                                             |
+
+### Components
+
+| Tool                   | Description                                               |
+| ---------------------- | --------------------------------------------------------- |
+| `list_components`      | List all components and the folder each one is in         |
+| `get_component_info`   | Get a component's generated code and design document      |
+| `screenshot_component` | Screenshot a component's variants and states              |
+| `design_component`     | Design a new component from a description                 |
+| `edit_component`       | Edit a component, updating every page that uses it        |
+| `delete_component`     | Delete a component or custom page layout                  |
+| `list_folders`         | List component folders and what each contains             |
+| `delete_folder`        | Delete a component folder, optionally with its components |
+
+### Snippets
+
+Snippets are small, standalone bits of UI typically embedded inside design documents as live examples (e.g. a "Button variants" snippet showing every Button state). They live within Subframe and do not sync out.
+
+| Tool                 | Description                                                               |
+| -------------------- | ------------------------------------------------------------------------- |
+| `list_snippets`      | List all snippets                                                         |
+| `get_snippet_info`   | Get a snippet's generated code                                            |
+| `design_snippet`     | Design a new snippet from a description                                   |
+| `edit_snippet`       | Edit a snippet element's content, structure, and styles                   |
+| `update_node_styles` | Replace elements' Tailwind classes while preserving content and structure |
+| `delete_snippet`     | Delete a snippet and remove it from any design documents                  |
+
+### Canvases
+
+A [canvas](/design/canvases) is a collection of related pages (e.g. "Onboarding", "Checkout").
+
+| Tool              | Description                                         |
+| ----------------- | --------------------------------------------------- |
+| `list_canvases`   | List all canvases                                   |
+| `get_canvas_info` | Get a canvas and its pages with their grid position |
+| `delete_canvas`   | Delete a canvas, optionally with the pages on it    |
+
+### Organizing
+
+| Tool        | Description                                                                                     |
+| ----------- | ----------------------------------------------------------------------------------------------- |
+| `rename`    | Rename a page, component, snippet, canvas, component folder, or theme                           |
+| `move`      | Move pages to another grid cell or canvas, or components into folders; a batch applies together |
+| `duplicate` | Make an exact copy of a page, component, snippet, canvas, theme, or whole project               |
+
+A duplicated canvas includes copies of its pages but not its prototype. A duplicated component stays in the same folder as the original.
+
+### Comments
+
+| Tool            | Description                                                        |
+| --------------- | ------------------------------------------------------------------ |
+| `list_comments` | List the comment threads on a page, a canvas, or the whole project |
+
+Open threads are returned by default. Each thread's element id matches `get_page_info`'s node ids, so an agent can act on the feedback with `edit_page` or `update_node_styles`. Replying to and resolving comments happens in the Subframe editor.
+
+### Exporting images
+
+| Tool           | Description                                                                      |
+| -------------- | -------------------------------------------------------------------------------- |
+| `export_image` | Export a page, an element, a component, or a snippet as a PNG, JPG, WebP, or PDF |
+
+The tool returns a download URL. A component exports its default variant. Agents check their own work with `screenshot_page` and `screenshot_component` instead.
+
+### Prototypes
+
+A prototype is an interactive, AI-generated running app — its own React + Vite codebase — created in the Subframe prototyping editor. The read tools below expose a prototype as a standalone, runnable Vite app: internal scaffolding is dropped and the Vite/Tailwind config plus an entrypoint are added, so the file paths and contents you get back are ready to run with `npm install && npm run dev`.
+
+| Tool                  | Description                              |
+| --------------------- | ---------------------------------------- |
+| `list_prototypes`     | List all prototypes                      |
+| `get_prototype_info`  | Get a prototype's metadata and file list |
+| `read_prototype_file` | Read one file from a prototype           |
+
+### Design documents
+
+[Design documents](/design/documents) are Markdown files containing product context, brand voice, design principles, component usage rules, and accessibility requirements. **Project docs** cover guidance shared across the project; **component docs** cover the use of a specific component. Use `get_project_info` to access project docs and `get_component_info` to access a component’s doc.
+
+| Tool                    | Description                        |
+| ----------------------- | ---------------------------------- |
+| `write_design_document` | Create or update a design document |
+
+A component can have at most one design document. Snippets can be embedded as live examples with `<div data-type="component-example" data-component-id="..."></div>`.
+
+### Theme
+
+| Tool           | Description                                                                                                 |
+| -------------- | ----------------------------------------------------------------------------------------------------------- |
+| `list_themes`  | List the project's themes with their ids and which one is the default                                       |
+| `get_theme`    | Get a theme as typed JSON, plus breakpoints and available fonts                                             |
+| `edit_theme`   | Edit a theme's colors, typography, corners, shadows, borders, and defaults with a batch of typed operations |
+| `import_theme` | Import pasted Tailwind v4 CSS or a Tailwind v3 config into a theme                                          |
+| `delete_theme` | Delete a theme other than the default                                                                       |
+
+A project can hold several themes that share token names but differ in values. Add a theme with `duplicate` (this needs the Pro plan; existing themes stay editable on any plan) and rename it with `rename`. The default theme cannot be deleted. Theme edits apply immediately across every page and component, and a batch of operations is applied all at once or not at all.
+
+<Warning>
+  Deleting a theme token that is in use is refused unless the request names a replacement token or detaches it. A
+  replacement keeps every reference attached. Detaching replaces each reference in your designs with the token's value
+  in the default theme, and those references stay detached even if you restore the token.
+</Warning>
+
+### Icons, fonts and images
+
+| Tool                  | Description                                                              |
+| --------------------- | ------------------------------------------------------------------------ |
+| `search_icons`        | Search the project's icon library                                        |
+| `list_icons`          | List uploaded icons                                                      |
+| `get_icon_info`       | Get an uploaded icon's markup                                            |
+| `list_fonts`          | List Google and custom fonts, with each custom face's URL                |
+| `list_images`         | List uploaded images, with each image's URL                              |
+| `create_asset_upload` | Get an upload link for icon SVGs, font and image files from your machine |
+| `add_icons`           | Add uploaded SVGs to the icon library                                    |
+| `add_fonts`           | Add uploaded font files as custom font families                          |
+| `add_images`          | Add uploaded images (PNG, JPEG, GIF, WebP, AVIF, SVG; up to 10 MB)       |
+| `delete_icons`        | Delete uploaded icons                                                    |
+| `delete_fonts`        | Delete custom fonts, switching every use to a replacement font           |
+| `delete_images`       | Delete images, turning each reference into a plain image URL             |
+
+The agent uploads files with `curl`, so importing icons, fonts and images needs an agent that can run commands, like Claude Code, Codex, Cursor, or an agent in Subframe’s Agent chat — the upload link accepts files for 10 minutes, and uploaded files can be added with `add_icons` / `add_fonts` / `add_images` for about a day. A same-name icon upload replaces the earlier one everywhere it's used; a font family named like a Google font is rejected. `add_images` always adds a new image and never replaces one. Reference an image with `<img src="{url}">` in design code or `edit_page`, using the URL from `add_images` or `list_images`.
+
+### Motion library
+
+| Tool                     | Description                                                                 |
+| ------------------------ | --------------------------------------------------------------------------- |
+| `search_motion_examples` | Search the [motion library](https://www.subframe.com/motion) by name, intent, or a description of an effect |
+| `get_motion_example`     | Get an example's code, adapt notes, packages, and preview                   |
+| `get_motion_guidance`    | Get Subframe's motion guidance by topic, like timing or accessibility       |
+
+These tools are also available without a Subframe account at `https://mcp.subframe.com/motion/mcp`.
+
+### Design references
+
+The design tools can ground a generation in real material — an existing page, component, or snippet in your project, raw code from your codebase, or a mockup uploaded to Subframe. Each reference comes with a note telling the generator how to use it, like "Match this page's layout and header".
+
+Invalid references are dropped with a warning in the tool result rather than failing the design.
+
+### Async jobs
+
+| Tool            | Description                               |
+| --------------- | ----------------------------------------- |
+| `wait_for_jobs` | Wait for background design jobs to finish |
+
+`design_page`, `design_component`, and `edit_component` run in the background and return a URL you can open right away to watch progress in the editor. Reading a page or component back before its job finishes returns stale content.
+
+## Prompting with an MCP link
+
+To reference a page in an external agent, copy its MCP link from the **Export** tab.
+
+```text
+Implement the design at https://app.subframe.com/design/...
+```
+
+<Note>
+  To get the latest version of components in your project, run `npx @subframe/cli@latest sync` to [sync
+  components](/develop/concepts/syncing-components).
+</Note>
+
+## Example prompts
+
+<AccordionGroup>
+
+<Accordion title="Implement a new page from a design">
+
+```text
+Create a new page using the Subframe page at
+https://app.subframe.com/PROJECT_ID/design/DESIGN_ID/edit as reference.
+
+Wire up relevant app logic (API calls, hooks, routing) where applicable.
+Keep it consistent with existing project conventions.
+```
+
+</Accordion>
+
+<Accordion title="Update an existing page with a new design">
+
+```text
+Update the existing page to match the Subframe design at
+https://app.subframe.com/PROJECT_ID/design/DESIGN_ID/edit.
+
+Preserve all existing functionality unless the new design requires a change.
+```
+
+</Accordion>
+
+<Accordion title="Design a new component">
+
+```text
+Design a PrivacyToggle component in Subframe. It should have an on/off state,
+a label, and a description below the label. Use the same toggle styling as
+our existing Toggle component.
+```
+
+</Accordion>
+
+<Accordion title="Write a design document">
+
+```text
+Write a design doc for the Toggle component covering when to use it,
+accessibility considerations, and a snippet showing all variants.
+```
+
+</Accordion>
+
+<Accordion title="Delete unused components">
+
+```text
+List the components in my Subframe project and help me delete any that
+aren't being used in any pages.
+```
+
+</Accordion>
+
+<Accordion title="Add accessibility tags in code">
+
+```text
+Review the Subframe design at
+https://app.subframe.com/PROJECT_ID/design/DESIGN_ID/edit and add proper
+accessibility attributes to the existing page.
+
+Add ARIA labels, roles, and descriptions, and proper semantic HTML throughout.
+```
+
+</Accordion>
+
+<Accordion title="Migrate to Subframe's design system">
+
+```text
+Migrate the components on the existing page to use Subframe components instead
+of the old components.
+
+Get all components in my Subframe project and preserve all existing
+functionality unless the new design requires a change.
+```
+
+</Accordion>
+
+<Accordion title="Fetch a component">
+
+```text
+Get the Button component from Subframe and use it in this file.
+```
+
+</Accordion>
+
+<Accordion title="List available components">
+
+```text
+Show me all components in my Subframe project.
+```
+
+</Accordion>
+
+<Accordion title="Get the theme">
+
+```text
+Get my Subframe theme configuration.
+```
+
+</Accordion>
+
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+
+<Accordion title="Authentication failed">
+
+The Subframe MCP server uses OAuth. If you're seeing authentication errors:
+
+- Try re-authenticating by reconnecting to the MCP server in your client
+- Check that you have the correct permissions for the project you're trying to access
+- Make sure your browser session is active when authenticating
+- Confirm your client supports MCP OAuth — Subframe access tokens are not accepted by the MCP server
+
+</Accordion>
+
+<Accordion title="Agent not calling the MCP server">
+
+Make sure your MCP client:
+
+- Has MCP support enabled
+- Has the Subframe server in its MCP configuration
+- Has been restarted after adding the configuration
+
+Check your client's logs for MCP-related errors.
+
+</Accordion>
+
+<Accordion title="Component or page not found">
+
+Use `list_components`, `list_pages`, `list_snippets`, or `list_canvases` to see what's available.
+
+Verify:
+
+- The component/page/snippet exists in your Subframe project
+- The name or URL matches exactly
+- You have access to the project
+
+</Accordion>
+
+<Accordion title="Background job seems stuck">
+
+`design_page`, `design_component`, and `edit_component` run as background jobs. Check `wait_for_jobs` with the `jobId` returned by the design tool — it reports `running`, `done`, `error`, or `not_found`. The URL is live throughout, so opening it in the editor shows real-time progress.
+
+If a job stops reporting progress for ~10 minutes, the server treats it as stalled (worker died, request timed out) and reports it as `error` so polling never hangs — its summary explains that the result could not be verified. Open the URL to see whether anything was actually generated; the chat panel surfaces any errors from the agent.
+
+</Accordion>
+
+<Accordion title="Connection errors">
+
+If the MCP server is unreachable:
+
+- Check your internet connection
+- Verify the URL is `https://mcp.subframe.com/mcp`
+- Reach out to the Subframe team for support
+
+</Accordion>
+
+</AccordionGroup>

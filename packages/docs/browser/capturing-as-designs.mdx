@@ -1,0 +1,48 @@
+---
+title: Capturing as designs
+description: Capture a page or element from the browser as an editable design.
+---
+
+import DownloadDesktopCta from "/snippets/download-desktop-cta.mdx"
+
+<DownloadDesktopCta />
+
+Capture turns a page or element from the browser into an editable design on the canvas. It works on any page built with HTML and CSS, including frameworks like React, Vue, and Angular. To get started, [open your app or website in a browser tab](/browser/previewing-your-local-app).
+
+## Capturing a page
+
+1. Click **Capture** in the browser toolbar
+2. Add the page to a canvas:
+   - Click **Add to canvas** in the confirmation message, then select a canvas
+   - Or open a canvas and press <kbd>Cmd</kbd> + <kbd>V</kbd> to paste it
+
+When a captured page is wider than the default page width, the Inspector panel shows **Scaled from ...px capture**. Click **Reset** to lay the page out at the default width.
+
+<video
+  autoPlay
+  muted
+  loop
+  playsInline
+  controls
+  className="w-full"
+  src="/videos/browser/capture-page.mp4"
+/>
+
+## Asking the agent to capture a flow
+
+In [Agent chat](/agent/overview), ask the agent to capture a flow, such as "capture every state of the checkout flow", or click the **Capture every state of a flow…** starter prompt in a new chat. The agent opens the pages in browser tabs, clicks through each step, and captures every screen, dialog, and error state it finds.
+
+While the agent uses a tab, the tab shows **Agent is using this tab**. Click **Take control** to take the tab back. The agent then stops acting in it and asks you how to continue.
+
+The agent can use any site, including ones that aren't running on your computer, and fills in and submits forms to reach each state. It asks you in chat before an action it can't undo outside the page, like paying, sending a message as you, deleting data, or changing a password or sharing settings, unless you asked for that action. If a page needs you to sign in, the agent asks you to sign in in the tab or to give it credentials to enter.
+
+## Capturing an element
+
+Capture an element when you only need part of the page.
+
+1. Click **Inspect** in the browser toolbar
+2. Click on an element
+3. Press <kbd>Cmd</kbd> + <kbd>C</kbd> or click **Copy selection** in the Inspector panel
+4. Paste the element onto a canvas or into [Agent chat](/agent/giving-your-agent-context#pasting-designs-and-browser-captures)
+
+To paste the element into an existing design, select where it should go first. With nothing selected, the element lands centered on a new page.

@@ -1,0 +1,300 @@
+# Subframe documentation
+
+## Working relationship
+
+- Push back on ideas when needed—cite sources and explain your reasoning
+- ALWAYS ask for clarification rather than making assumptions
+- NEVER lie, guess, or make up information
+- Verify features against the actual codebase before documenting
+
+## Project context
+
+- Format: MDX files with YAML frontmatter
+- Config: docs.json for navigation, theme, settings
+- Components: Mintlify components (Note, Warning, Tip, CodeGroup, Tabs, Steps, Frame, Accordion, etc.)
+- Directory structure mirrors docs.json navigation
+
+## Core philosophy
+
+Subframe serves designers and engineers simultaneously. Documentation must be:
+
+- **Concise**: Short explanations for concepts
+- **Action-oriented**: Focus on what users do, not abstract theory
+- **Accurate**: Verify every feature against codebase implementation
+- **Practical**: Use realistic examples, never generic placeholders
+
+## Content strategy
+
+**Utility-first documentation:**
+- Open immediately with solutions, not preamble
+- End when problem-solving completes, no forced conclusions
+- Document just enough for user success—not too much, not too little
+
+**Task-oriented content:**
+- Most articles enable a specific outcome with verb-based titles
+- Prioritize "What can I accomplish?" over "What is this feature?"
+- Introductions state the outcome or use cases
+
+**Evergreen and consistent:**
+- Make content evergreen when possible
+- Search for existing information before adding new content
+- Check existing patterns for consistency
+- Start by making the smallest reasonable changes
+
+## Writing standards
+
+### Voice and tone
+
+- Second-person ("you"), present tense, active voice
+- Professional yet approachable
+- Write for scanning, not reading
+- Use em-dashes sparingly. They have a stylistic use, but overuse reads as AI-generated. Default to periods, commas, or parentheses.
+- No filler or embellishment (e.g. "a seamless transition in both directions"). Every word must add information.
+- Write like a helpful coach. Prefer short, common words and direct verbs. Read each sentence aloud; if it sounds formal or clunky, simplify it.
+- No nothing-words like "things" (e.g. "the desktop app adds three things"). Say what it is; the list carries its own count.
+- Readers are in the docs to learn. Frame content so they understand the value of Subframe and get the answer they came for.
+
+**Active voice over passive:**
+```markdown
+✓ You can add properties in the Inspector panel
+✓ Click **Export** to copy the code
+
+✗ Properties can be added in the Inspector panel
+✗ Users can click Export to copy code
+```
+
+### Article structure
+
+**Heading structure:**
+- Use H2s to divide an article into distinct user stories, intended uses, or workflows. Headings should make the article easy to scan.
+- Organize sections around user goals, not individual controls or modes. Combine tools or modes when they are consecutive parts of the same task.
+- Use H3s sparingly and avoid deeper nesting.
+
+**Navigation structure:**
+- If a navigation group contains exactly one page, collapse the group. Add the page directly to its parent and use the intended group label as the page title.
+
+**Verb form in titles:**
+- Article titles and navigation group names use the -ing form: "Adding elements," "Using the editor," "Customizing your theme"
+- Step titles and instructions use the imperative: "Download the desktop app," "Click **Export**"
+
+**Frontmatter (required):**
+```yaml
+---
+title: Clear, descriptive page title
+description: Concise summary for SEO/navigation
+---
+```
+
+The description renders at the top of the page, so it counts as page copy. Never repeat its phrasing in the body.
+
+**Instructions:**
+- Imperative voice: "Click," "Select," "Drag," "Type"
+- Numbered steps for sequences
+- Bold clickable UI elements: "Click **Apply**"
+- Prerequisites at start of procedural content
+- Write procedures in the order users perform them, from entering a mode through completing or handing off the work. Include required actions such as **Save** or **Send**.
+- Don't describe what the interface looks like unless the user needs that information to take the next step or confirm that an action worked.
+- Add a short sentence before a list when it clarifies the purpose, value, or outcome. Don't repeat the heading or preview obvious steps.
+
+**Introductions and conclusions:**
+- Open with immediate value statement or use cases
+- No preambles or historical context
+- End when information completes—no forced conclusions
+
+## Formatting conventions
+
+**UI elements—always bold:**
+```markdown
+✓ Click the **Export** button
+✓ Navigate to **Components > Button**
+✓ Select **Create component** from the menu
+```
+
+**Keyboard shortcuts—use `<kbd>` tags:**
+```markdown
+✓ Press <kbd>Cmd</kbd> + <kbd>K</kbd>
+✓ <kbd>Shift</kbd> + click to select multiple
+```
+
+**Icons in text:**
+```markdown
+✓ Open the [quick insert](/design/design-mode/adding-elements) <Icon icon="plus" size={16} /> menu
+```
+
+**Code blocks—always include:**
+- Language tags
+- File names when relevant
+- Full, tested examples
+
+## Mintlify components
+
+**Frame—for images and videos:**
+```mdx
+<Frame caption="Optional caption">
+  <img src="/images/path.png" alt="Descriptive alt text" />
+</Frame>
+```
+
+**Videos:**
+```mdx
+<video autoPlay muted loop playsInline className="w-full" src="url.mp4" />
+```
+
+**Steps—for procedures:**
+```mdx
+<Steps>
+  <Step title="First step">Content here</Step>
+  <Step title="Second step">More content</Step>
+</Steps>
+```
+
+Steps walk the user through one goal or workflow. Use Steps or a numbered list inside the relevant section. Combine tools or modes when they are part of that workflow, but don't chain separate tasks into one sequence just because a user might do them in order.
+
+**CodeGroup—for package manager variations:**
+```mdx
+<CodeGroup>
+```bash npm
+npx @subframe/cli@latest sync
+```
+
+```bash yarn
+yarn dlx @subframe/cli@latest sync
+```
+</CodeGroup>
+```
+
+**Tabs—for alternative content:**
+```mdx
+<Tabs>
+  <Tab title="New project">Content for new projects</Tab>
+  <Tab title="Existing project">Content for existing</Tab>
+</Tabs>
+```
+
+**Accordions—for FAQs and troubleshooting:**
+```mdx
+<AccordionGroup>
+  <Accordion title="Why is X not working?">Answer content.</Accordion>
+  <Accordion title="How do I do Y?">Steps or explanation.</Accordion>
+</AccordionGroup>
+```
+
+**Callouts—use sparingly (1-2 per article):**
+```mdx
+<Tip>Efficiency shortcuts, best practices</Tip>
+<Note>Important context, limitations</Note>
+<Warning>Destructive actions or common errors</Warning>
+```
+
+## Visual content
+
+**Image alt text requirements:**
+- Describe the specific UI state or screen
+- Include key UI elements visible
+- Provide enough detail to understand the content
+
+**Example:**
+```markdown
+<Frame>
+  <img src="/images/editor/inspector.png" alt="The Inspector panel showing padding and margin controls for a selected Button component" />
+</Frame>
+```
+
+**Screenshots:**
+
+Pick the framing from what the text explains:
+
+- **Whole window** when the text is about where things are in the app. Capture a 1280x960 window at 1.35x (1728x1296 pixels) and center it on a 1920x1440 `#f5f5f5` canvas, 96px from the sides and 72px from the top and bottom, with 14px corners and a 1px `#e9e9e9` outline. The canvas matches the `.frame` background in `style.css`, so the image blends into its `<Frame>`.
+- **Tight crop** when the text is about one panel, menu, control, or dialog.
+
+Crop rules:
+
+- Crop to the smallest whole container (Inspector card, panel, menu, popover, or dialog) that holds everything the text mentions. Don't cut through a container, except at the bottom of a long panel like Layers.
+- Keep 8px of the surrounding surface so the container's corners and edge show. For dialogs, keep 32px of the backdrop.
+- For an open menu, popover, or tooltip, crop the trigger and the overlay together.
+- Show the default state. When a step clicks or selects something, show it hovered, with its tooltip and the pointer on it. A menu item the step selects is highlighted. Otherwise show no pointer.
+- Capture at 2x and add no frame, shadow, or border. Size the `<img>` with a Tailwind width class at half the file's pixel width, e.g. `className="w-[304px]"` for a 608px-wide file, so the crop displays at the UI's actual size. Mintlify recommends classes over the `style` prop, which causes layout shift. The local dev server doesn't generate these classes; check sizes on the preview deployment.
+
+Use PNG, light mode, and the scrambled-app demo project so every screenshot shows the same content. Save to `images/<topic>/<name>.png` with kebab-case names, and wrap every image in `<Frame>`.
+
+When you retake a screenshot, keep what the old one showed: the same state, open menu or popover, typed content, and highlighted item. Only the product's own changes should differ. Delete images that no page references.
+
+**Videos:** Record the same 1280x960 window at 2x with a visible pointer, crop to where the action happens, and speed through waits like an AI response. Keep clips to about 5–15 seconds and save them as H.264 MP4 to `videos/<topic>/<name>.mp4`.
+
+## Linking
+
+**Internal links—relative paths:**
+```markdown
+✓ For more on slots, see [Props and Slots](/design/components/props-and-slots)
+✓ Components sync one-way (see [Syncing Components](/develop/concepts/syncing-components))
+```
+
+**External links—add ↗ when helpful:**
+```markdown
+✓ [Radix ↗](https://www.radix-ui.com/)
+✓ [open source ↗](https://github.com/SubframeApp/subframe)
+```
+
+## Moving or removing pages
+
+- When you move, rename, or delete a page, add a redirect from its old path to the `redirects` array in docs.json. Old URLs stay in search results, CLI messages, and generated code long after the page moves.
+- Point the redirect at the page that now answers what the old page answered. Read the old page in git history and compare it to the current docs. Add a `#section` to the destination when the content moved into part of a page.
+- List each old path. Don't use wildcard sources like `/guides/:slug*`. They also redirect slugs that have no page at the destination.
+
+## Terminology
+
+**Consistent terms:**
+- Agent chat (replaces "Ask AI"—never use the old name)
+- Design mode, Prototype mode, Export mode
+- Inspector panel, Layers panel
+- Component library
+- Theme
+- MCP server
+- CLI
+- Properties, Slots
+- Stacks
+- Quick insert
+- Cmd+K
+
+**Action verbs:**
+- "click" for mouse actions on buttons/links
+- "select" for choosing from menus: "Click **...** and select **Delete**"
+- "press" for keyboard events: "press <kbd>S</kbd> to save"
+- "navigate to" for moving between pages
+
+## Product-specific patterns
+
+**Quick insert menu:**
+```markdown
+Open the [quick insert](/design/design-mode/adding-elements) <Icon icon="plus" size={16} /> menu
+```
+
+**Right-click actions (two steps):**
+1. "Right-click or press <kbd>/</kbd> to open [quick actions](/design/design-mode/quick-actions)"
+2. "Select **Action**"
+
+## Updating from product/code changes
+
+When updating docs based on product or code changes:
+
+- Verify all subframe.com and app.subframe.com links still work
+- Update copy to align with new terminology, UI labels, or behavior
+- If screenshots may be outdated, add a `{/* TODO: Update image */}` comment
+- Search for related mentions across docs that may need updating
+
+## Do not
+
+- Skip frontmatter on any MDX file
+- Use absolute URLs for internal links
+- Include untested code examples
+- Make assumptions—always ask for clarification
+- Use generic placeholder examples like "MyComponent"
+
+## References
+
+- docs.json schema: https://mintlify.com/docs.json
+- Mintlify components: https://mintlify.com/docs/content/components
+
+## Learnings
+
+- Don't document features behind feature flags until they are widely released

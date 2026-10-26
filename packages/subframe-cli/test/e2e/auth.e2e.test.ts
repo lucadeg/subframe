@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { makeHome, makeProjectDir, PROJECT_SETTINGS, runCli, scaffoldProject, setupMockServer,TOKEN } from "./harness"
+import { makeHome, makeProjectDir, PROJECT_SETTINGS, runCli, scaffoldProject, setupMockServer, TOKEN } from "./harness"
 
 const getMock = setupMockServer()
 
@@ -54,5 +54,17 @@ describe("authentication", () => {
     expect(result.timedOut).toBe(false)
     expect(result.exitCode).toBe(1)
     expect(result.stderr).toMatch(/authenticate|invalid/i)
+  })
+
+  it("surfaces the upgrade message when the server rejects the CLI version", async () => {
+    const dir = await initedProject()
+    getMock().routes["GET /api/cli/verify"] = () => ({ status: 426, json: { message: "Please upgrade the CLI" } })
+
+    const result = await runCli(["sync", "--all"], { cwd: dir, token: "any-token" })
+
+    expect(result.timedOut).toBe(false)
+    expect(result.exitCode).toBe(1)
+    expect(result.stderr).toContain("Please upgrade the CLI")
+    expect(result.stderr).not.toMatch(/invalid token|failed to authenticate with/i)
   })
 })
